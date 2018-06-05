@@ -10,4 +10,6 @@ expression_add_simple_test( abstraction )
 expression_add_simple_test( value )
 expression_add_simple_test( occurance )
 expression_add_simple_test( normal )
+expression_add_simple_test( rewrite )
+expression_add_simple_test( de_bruijn )
 

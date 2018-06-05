@@ -87,7 +87,8 @@ struct Free_occurance_test
 
 
 
-/** Test the predicate for bound occurance of a variable */
+/** Test the predicate for bound occurance of a variable 
+ */
 struct Bound_occurance_test
 {
   Bound_occurance_test() : accum( 0 ) {
@@ -122,12 +123,45 @@ struct Bound_occurance_test
   int accum;
 }; // end of struct Bound_occurance_test
 
+
+
+
+/** Test the predicate for free variables 
+*/
+struct Free_variable_test
+{
+  Free_variable_test() : accum( 0 ) {
+    using namespace Expression::Core;
+    EXPR_STATIC_TEST( ! has_free_variables( val(3.0)));
+    EXPR_STATIC_TEST( has_free_variables( var<0> ));
+    EXPR_STATIC_TEST( has_free_variables( var<0>( var<1> )));
+    EXPR_STATIC_TEST( has_free_variables( fun( var<0>, var<1> )));
+    EXPR_STATIC_TEST( ! has_free_variables( fun( var<0>, var<0> )));
+
+    EXPR_TEST( accum, ! has_free_variables( val(3.0)));
+    EXPR_TEST( accum, has_free_variables( var<0> ));
+    EXPR_TEST( accum, has_free_variables( var<0>( var<1> )));
+    EXPR_TEST( accum, has_free_variables( fun( var<0>, var<1> )));
+    EXPR_TEST( accum, ! has_free_variables( fun( var<0>, var<0> )));
+    
+  }
+  operator int() const { return accum; }
+  int accum;
+}; // end of struct Free_variable_test;
+
+
+
+
 int
 main( int, char** )
 {
+  
   int accum = 0;
+  
   accum += Occurance_test();
   accum += Free_occurance_test();
   accum += Bound_occurance_test();
+  accum += Free_variable_test();
+  
   return accum;
 }

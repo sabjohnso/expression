@@ -20,7 +20,7 @@ namespace Expression
     class Abstraction : public Expr<Abstraction<T,Index,Body>>
     {
     public:
-      using index_type = T;      
+      using index_type = T;
       static constexpr index_type index = Index;
       using body_type = Body;
 
@@ -43,7 +43,11 @@ namespace Expression
 
       friend constexpr const body_type&
       body( const Abstraction& fun ){ return fun.body; }
-    
+
+      friend constexpr bool
+      operator ==( const Abstraction& f, const Abstraction& g ){
+	return f.body == g.body;
+      }
       
     }; // end of class Abstraction
 
