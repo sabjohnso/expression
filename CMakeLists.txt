@@ -19,6 +19,13 @@ include_directories(
   ${EXPRESSION_SOURCE_DIR}
   ${EXPRESSION_BINARY_DIR} )
 
+if( NOT EXPRESSION_INSTALL_INCLUDE_DIR )
+  set( EXPRESSION_INSTALL_INCLUDE_DIR include/expression
+    CACHE PATH "Path for installation of header files")
+endif( NOT EXPRESSION_INSTALL_INCLUDE_DIR )
+
+add_subdirectory( expression )
+
 
 
 #
