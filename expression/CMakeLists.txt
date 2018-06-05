@@ -5,6 +5,7 @@ install( FILES
   app.hpp
   de_bruijn.hpp
   expr.hpp
+  expression.hpp
   fun.hpp
   fwd.hpp
   import.hpp
