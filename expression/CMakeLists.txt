@@ -12,6 +12,7 @@ install( FILES
   normal.hpp
   occurs.hpp
   rewrite.hpp
+  simplify.hpp
   utility.hpp
   val.hpp
   var.hpp

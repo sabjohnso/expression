@@ -13,7 +13,8 @@ set( EXPRESSION_VERSION expression-${EXPRESSION_MAJOR}.${EXPRESSION_MINOR} )
 set( EXPRESSION_VERSION_UPDATE ${EXPRESSION_VERSION}.{EXPRESSION_UPDATE} )
   
 
-option( BUILD_EXPRESSION_TESTING  "Build the expression  tests" ON )
+option( BUILD_EXPRESSION_TESTING  "Build the expression tests" ON )
+option( BUILD_EXPRESSION_DOCUMENTATION "Build the documentation" ON )
 
 include_directories( 
   ${EXPRESSION_SOURCE_DIR}
@@ -42,6 +43,8 @@ endif( BUILD_EXPRESSION_TESTING )
 # ... Documentation
 #
 if( BUILD_EXPRESSION_DOCUMENTATION )
+
+  configure_file( Doxyfile.in Doxyfile )
   
   if( NOT EXPRESSION_INSTALL_DOC_DIR )
     set( EXPRESSION_INSTALL_DOC_DIR share/${EXPRESSION_VERSION}

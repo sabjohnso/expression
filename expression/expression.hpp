@@ -9,7 +9,7 @@
 #include <expression/val.hpp>
 #include <expression/var.hpp>
 #include <expression/rewrite.hpp>
-#include <expression/debruijn.hpp>
+#include <expression/de_bruijn.hpp>
 
 
 namespace Expression

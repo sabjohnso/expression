@@ -12,4 +12,5 @@ expression_add_simple_test( occurance )
 expression_add_simple_test( normal )
 expression_add_simple_test( rewrite )
 expression_add_simple_test( de_bruijn )
+expression_add_simple_test( simplify )
 

@@ -48,6 +48,14 @@ namespace Expression
       operator ==( const Abstraction& f, const Abstraction& g ){
 	return f.body == g.body;
       }
+
+      template< typename U >
+      friend constexpr bool
+      operator ==( const Abstraction& f, const U& g ){ return false; }
+
+      template< typename U >
+      friend constexpr bool
+      operator !=( const Abstraction& f, const U& g ){ return !( f == g ); }
       
     }; // end of class Abstraction
 

@@ -60,9 +60,13 @@ namespace Expression
 
       template< typename U >
       friend constexpr bool
-      operator ==( const Value& x, const Value<U>& y ){
+      operator ==( const Value& x, const U& y ){
 	return false;
       }
+
+      template< typename U>
+      friend constexpr bool
+      operator !=( const Value& x, const U& y ){ return !( x == y ); }
 
       template< typename Stream >
       friend Stream&
@@ -70,9 +74,13 @@ namespace Expression
 	os << x.value;
 	return os;
       }
+
+
       
       
     }; // end of class Value
+
+
 
 
     template< typename T >
