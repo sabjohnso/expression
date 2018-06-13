@@ -126,7 +126,7 @@ namespace Expression
       static constexpr auto
       aux_fun_index_check( true_type, const Abstraction<T,Index,Body>& expr, const Data<NewBody,Depth,Repeat>& data ){
 	static_assert( Index == Depth );
-	return Data<Abstraction<T,Index,NewBody>,Index+1,Repeat>( fun( Variable<T,Index>{}, expression( data )));
+	return Data<Abstraction<T,Index,NewBody>,Index+1,Repeat>( fn( Variable<T,Index>{}, expression( data )));
       }
 
       template< typename T, T Index, typename Body, typename NewBody, size_t Depth, bool Repeat >

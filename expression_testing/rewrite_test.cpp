@@ -23,11 +23,11 @@ struct Rewrite_test
     EXPR_STATIC_TEST( rewrite( var<0>( var<0> ), var<0>, var<2>) ==
 		      var<2>( var<2> ));
 
-    EXPR_STATIC_TEST( rewrite( fun( var<0>, var<0> ), var<0>, var<2> ) ==
-		      fun( var<0>, var<0> ));
+    EXPR_STATIC_TEST( rewrite( fn( var<0>, var<0> ), var<0>, var<2> ) ==
+		      fn( var<0>, var<0> ));
 
-    EXPR_STATIC_TEST( rewrite( fun( var<0>, var<1> ), var<1>, var<2> ) ==
-		      fun( var<0>, var<2> ));
+    EXPR_STATIC_TEST( rewrite( fn( var<0>, var<1> ), var<1>, var<2> ) ==
+		      fn( var<0>, var<2> ));
     
 		      
     

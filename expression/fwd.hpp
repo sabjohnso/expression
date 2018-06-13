@@ -19,6 +19,18 @@ namespace Expression
     constexpr R
     app( F&& f, T&& x );
 
+    template< typename I, I Index >
+    class Variable;
+
+
+    template< typename T >
+    class Value;
+
+    template< typename T, typename R = Value<decay_t<T>>>
+    constexpr R
+    val( T&& x );
+    
+
     
   } // end of namespace Core
 } // end of namespace Expression

@@ -18,12 +18,12 @@ struct Eta_reduce_test
     EXPR_STATIC_TEST( eta_reduce( var<0> ) == var<0> );
     EXPR_STATIC_TEST( eta_reduce( val( 'x' )) == val( 'x' ));
     EXPR_STATIC_TEST( eta_reduce( var<0>( var<1> )) == var<0>( var<1> ));
-    EXPR_STATIC_TEST( eta_reduce( fun( var<0>, var<1>( var<0> ))) == var<1> );
+    EXPR_STATIC_TEST( eta_reduce( fn( var<0>, var<1>( var<0> ))) == var<1> );
 
     EXPR_TEST( accum, eta_reduce( var<0> ) == var<0> );
     EXPR_TEST( accum, eta_reduce( val( 'x' )) == val( 'x' ));
     EXPR_TEST( accum, eta_reduce( var<0>( var<1> )) == var<0>( var<1> ));
-    EXPR_TEST( accum, eta_reduce( fun( var<0>, var<1>( var<0> ))) == var<1> );
+    EXPR_TEST( accum, eta_reduce( fn( var<0>, var<1>( var<0> ))) == var<1> );
   }
   operator int() const { return accum; }
   int accum;
@@ -37,7 +37,7 @@ struct Beta_reduce_test
     using namespace Expression::Core;
     EXPR_STATIC_TEST( beta_reduce( var<0> ) == var<0> );
     EXPR_STATIC_TEST( beta_reduce( val( 'x' ) == val( 'x' )));
-    beta_reduce( fun( var<0>, var<0>)( val( 'x' )));
+    beta_reduce( fn( var<0>, var<0>)( val( 'x' )));
     
     
   }

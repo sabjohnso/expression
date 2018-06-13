@@ -17,27 +17,27 @@ struct DeBruijn_test
     using namespace Expression::Core;
     EXPR_STATIC_TEST( de_bruijn( var<0> ) == var<0> );
     EXPR_STATIC_TEST( de_bruijn( var<1>( var<0> )) == var<1>( var<0> ));
-    EXPR_STATIC_TEST( de_bruijn( fun( var<0>, var<0> )) == fun( var<0>, var<0> ));
-    EXPR_STATIC_TEST( de_bruijn( fun( var<1>, var<1> )) == fun( var<0>, var<0> ));
-    EXPR_STATIC_TEST( de_bruijn( fun( var<2>, var<1>, var<0>, var<2>( var<0>, var<1>( var<0> )))) ==
-		      fun( var<2>, var<1>, var<0>, var<2>( var<0>, var<1>( var<0> ))));
+    EXPR_STATIC_TEST( de_bruijn( fn( var<0>, var<0> )) == fn( var<0>, var<0> ));
+    EXPR_STATIC_TEST( de_bruijn( fn( var<1>, var<1> )) == fn( var<0>, var<0> ));
+    EXPR_STATIC_TEST( de_bruijn( fn( var<2>, var<1>, var<0>, var<2>( var<0>, var<1>( var<0> )))) ==
+		      fn( var<2>, var<1>, var<0>, var<2>( var<0>, var<1>( var<0> ))));
 
     EXPR_STATIC_TEST( 
-      de_bruijn( fun( var<0>, var<1>, var<2>, var<0>( var<2>, var<1>( var<2> ))))
-      ==  fun( var<2>, var<1>, var<0>, var<2>( var<0>, var<1>( var<0> ))));
+      de_bruijn( fn( var<0>, var<1>, var<2>, var<0>( var<2>, var<1>( var<2> ))))
+      ==  fn( var<2>, var<1>, var<0>, var<2>( var<0>, var<1>( var<0> ))));
 
 
     EXPR_TEST( accum, de_bruijn( var<0> ) == var<0> );
     EXPR_TEST( accum, de_bruijn( var<1>( var<0> )) == var<1>( var<0> ));
-    EXPR_TEST( accum, de_bruijn( fun( var<0>, var<0> )) == fun( var<0>, var<0> ));
-    EXPR_TEST( accum, de_bruijn( fun( var<1>, var<1> )) == fun( var<0>, var<0> ));
-    EXPR_TEST( accum, de_bruijn( fun( var<2>, var<1>, var<0>, var<2>( var<0>, var<1>( var<0> )))) ==
-		      fun( var<2>, var<1>, var<0>, var<2>( var<0>, var<1>( var<0> ))));
+    EXPR_TEST( accum, de_bruijn( fn( var<0>, var<0> )) == fn( var<0>, var<0> ));
+    EXPR_TEST( accum, de_bruijn( fn( var<1>, var<1> )) == fn( var<0>, var<0> ));
+    EXPR_TEST( accum, de_bruijn( fn( var<2>, var<1>, var<0>, var<2>( var<0>, var<1>( var<0> )))) ==
+		      fn( var<2>, var<1>, var<0>, var<2>( var<0>, var<1>( var<0> ))));
 
     EXPR_TEST( accum, 
-      de_bruijn( fun( var<0>, var<1>, var<2>,
+      de_bruijn( fn( var<0>, var<1>, var<2>,
 		      var<0>( var<2>, var<1>( var<2> )))) == 
-      fun( var<2>, var<1>, var<0>,
+      fn( var<2>, var<1>, var<0>,
 	   var<2>( var<0>, var<1>( var<0> ))));
 
   }

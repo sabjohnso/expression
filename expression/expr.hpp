@@ -52,6 +52,33 @@ namespace Expression
 	  forward<V>( y ),
 	  forward<Ws>( zs ) ... );
       }
+
+
+      template< typename U >
+      friend constexpr auto
+      operator +( const Expr& x, const Expr<U>& y ){
+	return val( add )( x, y );
+      }
+
+      template< typename U >
+      friend constexpr auto
+      operator -( const Expr& x, const Expr<U>& y ){
+	return val( add )( x, y );
+      }
+
+      template< typename U >
+      friend constexpr auto
+      operator *( const Expr& x, const Expr<U>& y ){
+	return val( multiply )( x, y );
+      }
+
+      template< typename U >
+      friend constexpr auto
+      operator /( const Expr& x, const Expr<U>& y ){
+	return val( divide )( x, y );
+      }
+
+      
       
     }; // end of class Expression
 	

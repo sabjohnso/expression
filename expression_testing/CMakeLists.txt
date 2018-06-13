@@ -13,4 +13,7 @@ expression_add_simple_test( normal )
 expression_add_simple_test( rewrite )
 expression_add_simple_test( de_bruijn )
 expression_add_simple_test( simplify )
+expression_add_simple_test( arithmetic )
+expression_add_simple_test( binding )
+expression_add_simple_test( let )
 

@@ -29,6 +29,12 @@ namespace Expression
       Abstraction( E&& expr )
 	: body( forward<E>( expr ))
       {}
+
+      template< typename E >
+      constexpr
+      Abstraction( const E& expr )
+	: body( expr )
+      {}
       
     private:
       
@@ -62,7 +68,7 @@ namespace Expression
 
     template< typename T, T Index, typename Body >
     constexpr auto
-    fun( Variable<T,Index>, Body&& body ){
+    fn( Variable<T,Index>, Body&& body ){
       return Abstraction<T,Index,decay_t<Body>>(
 	forward<Body>( body ));
     }
@@ -70,11 +76,11 @@ namespace Expression
     
     template< typename T, T Index, typename U, typename V, typename ... Ws >
     constexpr auto
-    fun( Variable<T,Index>, U&& x, V&& y, Ws&& ... zs ){
-      return fun( Variable<T,Index>{},
-		  fun( forward<U>( x ), 
-		       forward<V>( y ), 
-		       forward<Ws>( zs ) ... ));
+    fn( Variable<T,Index>, U&& x, V&& y, Ws&& ... zs ){
+      return fn( Variable<T,Index>{},
+		 fn( forward<U>( x ), 
+		     forward<V>( y ), 
+		     forward<Ws>( zs ) ... ));
     }
 
 

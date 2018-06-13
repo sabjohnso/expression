@@ -28,7 +28,7 @@ struct Abstraction_test
 
     EXPR_TEST( 
       accum, 
-      string_repr( fun( var<2>, var<1>, var<0>, var<2>( var<0>, var<1>( var<0> )))) ==
+      string_repr( fn( var<2>, var<1>, var<0>, var<2>( var<0>, var<1>( var<0> )))) ==
       "$2:$1:$0:((%2 %0) (%1 %0))" );
 
     

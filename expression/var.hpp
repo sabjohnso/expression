@@ -8,6 +8,7 @@
 #include <expression/fwd.hpp>
 #include <expression/expr.hpp>
 #include <expression/app.hpp>
+#include <expression/binding.hpp>
 
 namespace Expression
 {
@@ -31,6 +32,12 @@ namespace Expression
 	os << '%' << index;
 	return os;
       }
+
+      template< typename E >
+      constexpr Binding<T,Index,E>
+      operator =( const Expr<E>& expr ) const & {
+	return Binding<T,Index,E>( expr );
+      }
       
     }; // end of class Variable
 
@@ -44,6 +51,8 @@ namespace Expression
 
     template< size_t Index >
     constexpr Variable<size_t,Index> var{};
+
+    
     
   } // end of namespace Core  
 } // end of namespace Expression

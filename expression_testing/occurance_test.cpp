@@ -20,8 +20,8 @@ struct Occurance_test
     EXPR_STATIC_TEST( ! occurs( var<0>, val( 3.0 )));
     EXPR_STATIC_TEST( occurs( var<0>, var<0> ));
     EXPR_STATIC_TEST( ! occurs( var<0>, var<1> ));
-    EXPR_STATIC_TEST( occurs( var<0>, fun( var<0>, var<0> )));
-    EXPR_STATIC_TEST( ! occurs( var<0>, fun( var<0>, var<1> )));
+    EXPR_STATIC_TEST( occurs( var<0>, fn( var<0>, var<0> )));
+    EXPR_STATIC_TEST( ! occurs( var<0>, fn( var<0>, var<1> )));
     EXPR_STATIC_TEST( occurs( var<0>, var<0>( var<1> )));
     EXPR_STATIC_TEST( occurs( var<0>, var<1>( var<0> )));
     EXPR_STATIC_TEST( occurs( var<0>, var<0>( var<0> )));
@@ -30,8 +30,8 @@ struct Occurance_test
     EXPR_TEST( accum,  ! occurs( var<0>, val( 3.0 )));
     EXPR_TEST( accum,  occurs( var<0>, var<0> ));
     EXPR_TEST( accum,  ! occurs( var<0>, var<1> ));
-    EXPR_TEST( accum,  occurs( var<0>, fun( var<0>, var<0> )));
-    EXPR_TEST( accum,  ! occurs( var<0>, fun( var<0>, var<1> )));
+    EXPR_TEST( accum,  occurs( var<0>, fn( var<0>, var<0> )));
+    EXPR_TEST( accum,  ! occurs( var<0>, fn( var<0>, var<1> )));
     EXPR_TEST( accum,  occurs( var<0>, var<0>( var<1> )));
     EXPR_TEST( accum,  occurs( var<0>, var<1>( var<0> )));
     EXPR_TEST( accum,  occurs( var<0>, var<0>( var<0> )));
@@ -61,10 +61,10 @@ struct Free_occurance_test
     EXPR_STATIC_TEST( occurs_free( var<0>, var<0>( var<1> )));
     EXPR_STATIC_TEST( occurs_free( var<0>, var<1>( var<0> )));
     EXPR_STATIC_TEST( ! occurs_free( var<0>, var<1>( var<2>  )));
-    EXPR_STATIC_TEST( ! occurs_free( var<0>, fun( var<0>, var<0> )));
-    EXPR_STATIC_TEST( ! occurs_free( var<0>, fun( var<0>, var<1> )));
-    EXPR_STATIC_TEST( occurs_free( var<0>, fun( var<1>, var<0> )));
-    EXPR_STATIC_TEST( ! occurs_free( var<0>, fun( var<1>, var<2> )));
+    EXPR_STATIC_TEST( ! occurs_free( var<0>, fn( var<0>, var<0> )));
+    EXPR_STATIC_TEST( ! occurs_free( var<0>, fn( var<0>, var<1> )));
+    EXPR_STATIC_TEST( occurs_free( var<0>, fn( var<1>, var<0> )));
+    EXPR_STATIC_TEST( ! occurs_free( var<0>, fn( var<1>, var<2> )));
 
 
     EXPR_TEST( accum, ! occurs_free( var<0>, val( 'x' )));
@@ -74,10 +74,10 @@ struct Free_occurance_test
     EXPR_TEST( accum, occurs_free( var<0>, var<0>( var<1> )));
     EXPR_TEST( accum, occurs_free( var<0>, var<1>( var<0> )));
     EXPR_TEST( accum, ! occurs_free( var<0>, var<1>( var<2>  )));
-    EXPR_TEST( accum, ! occurs_free( var<0>, fun( var<0>, var<0> )));
-    EXPR_TEST( accum, ! occurs_free( var<0>, fun( var<0>, var<1> )));
-    EXPR_TEST( accum, occurs_free( var<0>, fun( var<1>, var<0> )));
-    EXPR_TEST( accum, ! occurs_free( var<0>, fun( var<1>, var<2> )));
+    EXPR_TEST( accum, ! occurs_free( var<0>, fn( var<0>, var<0> )));
+    EXPR_TEST( accum, ! occurs_free( var<0>, fn( var<0>, var<1> )));
+    EXPR_TEST( accum, occurs_free( var<0>, fn( var<1>, var<0> )));
+    EXPR_TEST( accum, ! occurs_free( var<0>, fn( var<1>, var<2> )));
 
     
   }
@@ -100,11 +100,11 @@ struct Bound_occurance_test
     EXPR_STATIC_TEST( ! occurs_bound( var<0>, var<0>( var<0> )));
     EXPR_STATIC_TEST( ! occurs_bound( var<0>, var<0>( var<1> )));
     EXPR_STATIC_TEST( ! occurs_bound( var<0>, var<1>( var<0> )));
-    EXPR_STATIC_TEST( occurs_bound( var<0>, fun( var<0>, var<0> )));
-    EXPR_STATIC_TEST( occurs_bound( var<0>, fun( var<0>, var<0>( var<0> ))));
-    EXPR_STATIC_TEST( occurs_bound( var<0>, fun( var<0>, var<1>( var<0> ))));
-    EXPR_STATIC_TEST( occurs_bound( var<0>, fun( var<0>, var<0>( var<1> ))));
-    EXPR_STATIC_TEST( ! occurs_bound( var<0>, fun( var<0>, var<1> )));
+    EXPR_STATIC_TEST( occurs_bound( var<0>, fn( var<0>, var<0> )));
+    EXPR_STATIC_TEST( occurs_bound( var<0>, fn( var<0>, var<0>( var<0> ))));
+    EXPR_STATIC_TEST( occurs_bound( var<0>, fn( var<0>, var<1>( var<0> ))));
+    EXPR_STATIC_TEST( occurs_bound( var<0>, fn( var<0>, var<0>( var<1> ))));
+    EXPR_STATIC_TEST( ! occurs_bound( var<0>, fn( var<0>, var<1> )));
 
 
     EXPR_TEST( accum, ! occurs_bound( var<0>, val( 8 ) ));
@@ -112,11 +112,11 @@ struct Bound_occurance_test
     EXPR_TEST( accum, ! occurs_bound( var<0>, var<0>( var<0> )));
     EXPR_TEST( accum, ! occurs_bound( var<0>, var<0>( var<1> )));
     EXPR_TEST( accum, ! occurs_bound( var<0>, var<1>( var<0> )));
-    EXPR_TEST( accum, occurs_bound( var<0>, fun( var<0>, var<0> )));
-    EXPR_TEST( accum, occurs_bound( var<0>, fun( var<0>, var<0>( var<0> ))));
-    EXPR_TEST( accum, occurs_bound( var<0>, fun( var<0>, var<1>( var<0> ))));
-    EXPR_TEST( accum, occurs_bound( var<0>, fun( var<0>, var<0>( var<1> ))));
-    EXPR_TEST( accum, ! occurs_bound( var<0>, fun( var<0>, var<1> )));
+    EXPR_TEST( accum, occurs_bound( var<0>, fn( var<0>, var<0> )));
+    EXPR_TEST( accum, occurs_bound( var<0>, fn( var<0>, var<0>( var<0> ))));
+    EXPR_TEST( accum, occurs_bound( var<0>, fn( var<0>, var<1>( var<0> ))));
+    EXPR_TEST( accum, occurs_bound( var<0>, fn( var<0>, var<0>( var<1> ))));
+    EXPR_TEST( accum, ! occurs_bound( var<0>, fn( var<0>, var<1> )));
 
   }
   operator int() const { return accum; }
@@ -135,14 +135,14 @@ struct Free_variable_test
     EXPR_STATIC_TEST( ! has_free_variables( val(3.0)));
     EXPR_STATIC_TEST( has_free_variables( var<0> ));
     EXPR_STATIC_TEST( has_free_variables( var<0>( var<1> )));
-    EXPR_STATIC_TEST( has_free_variables( fun( var<0>, var<1> )));
-    EXPR_STATIC_TEST( ! has_free_variables( fun( var<0>, var<0> )));
+    EXPR_STATIC_TEST( has_free_variables( fn( var<0>, var<1> )));
+    EXPR_STATIC_TEST( ! has_free_variables( fn( var<0>, var<0> )));
 
     EXPR_TEST( accum, ! has_free_variables( val(3.0)));
     EXPR_TEST( accum, has_free_variables( var<0> ));
     EXPR_TEST( accum, has_free_variables( var<0>( var<1> )));
-    EXPR_TEST( accum, has_free_variables( fun( var<0>, var<1> )));
-    EXPR_TEST( accum, ! has_free_variables( fun( var<0>, var<0> )));
+    EXPR_TEST( accum, has_free_variables( fn( var<0>, var<1> )));
+    EXPR_TEST( accum, ! has_free_variables( fn( var<0>, var<0> )));
     
   }
   operator int() const { return accum; }

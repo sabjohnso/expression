@@ -5,6 +5,7 @@
 // ... Expression
 //
 #include <expression/import.hpp>
+#include <expression/fwd.hpp>
 #include <expression/expr.hpp>
 #include <expression/app.hpp>
 
@@ -83,8 +84,8 @@ namespace Expression
 
 
 
-    template< typename T >
-    constexpr auto
+    template< typename T, typename R = Value<decay_t<T>> >
+    constexpr R
     val( T&& x ){
       return Value<decay_t<T>>( forward<T>( x ));
     }

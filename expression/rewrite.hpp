@@ -43,7 +43,7 @@ namespace Expression
       template< typename I, I Index, typename Body, typename Pat, typename Rep >
       static constexpr auto
       aux( const Abstraction<I,Index,Body>& expr, const Pat& pat, const Rep& rep ){
-	return fun( Variable<I,Index>{}, 
+	return fn( Variable<I,Index>{}, 
 		    aux( body( expr ), pat, rep ));
       }
 
