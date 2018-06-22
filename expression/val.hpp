@@ -26,10 +26,16 @@ namespace Expression
       Value( U&& input ) : value( forward<U>( input )) {}
 
 
+      constexpr
+      value_type
+      get() const & { return value; }
+      
+      
 
       constexpr
       const value_type&
       operator *() const & { return value; }
+      
 
 
       constexpr
@@ -88,6 +94,14 @@ namespace Expression
     constexpr R
     val( T&& x ){
       return Value<decay_t<T>>( forward<T>( x ));
+    }
+
+
+    template< typename Stream, typename T >
+    Stream&
+    operator <<( Stream& os, Type<Value<T>> ){
+      os << "Expression::Core::Value<" << type<T> << ">";
+      return os;
     }
     
     

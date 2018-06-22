@@ -29,6 +29,9 @@ namespace Expression
     template< typename T, typename R = Value<decay_t<T>>>
     constexpr R
     val( T&& x );
+
+    template< typename T1, typename T2 >
+    class Alternative;
     
 
     

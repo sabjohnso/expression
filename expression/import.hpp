@@ -9,15 +9,13 @@
 #include <type_traits>
 #include <tuple>
 #include <algorithm>
+#include <memory>
 
 //
-// ... Type Utility header files
+// ... External library header files
 //
 #include <type_utility/type_utility.hpp>
-
-//
-// ... Operators header files
-//
+#include <function_utility/function_utility.hpp>
 #include <operators/operators.hpp>
 
 
@@ -40,8 +38,9 @@ namespace Expression
 
     using std::max;
 
-    
+    using std::pair;
     using std::tuple;
+    using std::nullptr_t;
 
 
     using TypeUtility::Type;
@@ -51,15 +50,24 @@ namespace Expression
     using TypeUtility::Integer_set;
     using TypeUtility::integer_set;
     using TypeUtility::generate_indices;
+    using TypeUtility::operator<<;
+
+    using FunctionUtility::identity;
+    using FunctionUtility::compose;
+    using FunctionUtility::fanout;
+    using FunctionUtility::selection;
 
 
     using Operators::add;
+    using Operators::Addition;
+    
     using Operators::subtract;
     using Operators::multiply;
     using Operators::divide;
     using Operators::modulo;
 
-    
+
+
     
     
   } // end of namespace Core

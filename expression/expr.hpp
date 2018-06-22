@@ -57,25 +57,44 @@ namespace Expression
       template< typename U >
       friend constexpr auto
       operator +( const Expr& x, const Expr<U>& y ){
-	return val( add )( x, y );
+	return val( add )( 
+	  static_cast<const T&>( x ),
+	  static_cast<const U&>( y ));
       }
+
+      
 
       template< typename U >
       friend constexpr auto
       operator -( const Expr& x, const Expr<U>& y ){
-	return val( add )( x, y );
+	return val( subtract )(
+	  static_cast<const T&>( x ),
+	  static_cast<const U&>( y ));
       }
 
       template< typename U >
       friend constexpr auto
       operator *( const Expr& x, const Expr<U>& y ){
-	return val( multiply )( x, y );
+	return val( multiply )(
+	  static_cast<const T&>( x ),
+	  static_cast<const U&>( y ));
       }
 
       template< typename U >
       friend constexpr auto
       operator /( const Expr& x, const Expr<U>& y ){
-	return val( divide )( x, y );
+	return val( divide )(
+	  static_cast<const T&>( x ),
+	  static_cast<const U&>( y ));
+      }
+
+
+      template< typename U >
+      friend constexpr auto
+      operator |( const Expr& x, const Expr<U>& y ){
+	return Alternative<T,Alternative<U,nullptr_t>>(
+	  static_cast<const T&>( x ),
+	  static_cast<const U&> ( y ));
       }
 
       

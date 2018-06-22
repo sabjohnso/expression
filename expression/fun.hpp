@@ -83,11 +83,17 @@ namespace Expression
 		     forward<Ws>( zs ) ... ));
     }
 
+    template< typename Stream, typename I, I Index, typename Body >
+    Stream&
+    operator<<( Stream& os, Type<Abstraction<I,Index,Body>> ){
+      os << "Expression::Core::Abstraction<" << type<I> << ',' << Index << ',' << type<Body> << '>';
+      return os;
+    }
 
 
     
 
-    
+
   } // end of namespace Core
 } // end of namespace Expression
 

@@ -15,7 +15,7 @@
 //
 #include <expression_testing/test_macros.hpp>
 
-/** UNDOCUMENTED TEST */
+/** Test arithmetic operators in expressions */
 struct Arithmetic_test
 {
   Arithmetic_test() : accum( 0 ) {
@@ -25,10 +25,20 @@ struct Arithmetic_test
 
   void
   addition_test(){
-    using namespace Expression;
+    using namespace Expression::Core;
+   
+    using Operators::Addition;
+    using std::is_same;
+    using std::decay_t;
     constexpr auto x = var<1>;
     constexpr auto y = var<2>;
+    
     std::cout << fn( x, y, x+y ) << std::endl;
+
+
+		      
+
+
   }
 private:
   

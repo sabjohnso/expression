@@ -54,12 +54,12 @@ namespace Expression
 	return (x.fun == y.fun) && (x.arg == y.arg);
       }
 
-      friend constexpr const function_type&
+      friend constexpr function_type
       fun( const Application& app ){
 	return app.fun;
       }
 
-      friend constexpr const argument_type&
+      friend constexpr argument_type
       arg( const Application& app ){
 	return app.arg;
       }
@@ -71,6 +71,14 @@ namespace Expression
     constexpr R
     app( F&& f, T&& x ){
       return R( forward<F>( f ), forward<T>( x ));
+    }
+
+
+    template< typename Stream, typename F, typename T >
+    Stream&
+    operator <<( Stream& os, Type<Application<F,T>> ){
+      os << "Expression::Core::Application<" << type<F> << ',' << type<T> << '>';
+      return os;
     }
 
   } // end of namespace Core

@@ -52,6 +52,13 @@ namespace Expression
     template< size_t Index >
     constexpr Variable<size_t,Index> var{};
 
+    template< typename Stream, typename I, I Index >
+    Stream&
+    operator <<( Stream& os, Type<Variable<I,Index>> ){
+      os << "Expression::Core::Variable<" << type<I> << ',' << Index << ">";
+      return os;
+    }
+
     
     
   } // end of namespace Core  
