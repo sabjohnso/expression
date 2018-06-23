@@ -42,6 +42,21 @@ namespace Expression
 			      compile( arg( expr ))));
     }
 
+    template< typename I, I Index, typename Body >
+    constexpr auto
+    compile( const Abstraction<I,Index,Body>& expr ){
+      return compile( body( expr ));
+    }
+
+    
+
+    template< typename I, I Index, typename Body >
+    constexpr auto
+    compile_function( const Abstraction<I,Index,Body>& expr ){
+      static_assert( is_de_bruijn( expr ));
+      return curry<Index+1>( compile( de_bruijn_invert( expr )));
+    }
+
 
     
   } // end of namespace Core

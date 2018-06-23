@@ -50,12 +50,15 @@ namespace Expression
     using TypeUtility::Integer_set;
     using TypeUtility::integer_set;
     using TypeUtility::generate_indices;
+    using TypeUtility::Nat;
+    using TypeUtility::nat;
     using TypeUtility::operator<<;
 
     using FunctionUtility::identity;
     using FunctionUtility::compose;
     using FunctionUtility::fanout;
     using FunctionUtility::selection;
+    using FunctionUtility::curry;
 
 
     using Operators::add;

@@ -18,6 +18,57 @@ namespace Expression
   namespace Core
   {
 
+    constexpr
+    class IsDeBruijn {
+    public:
+      template< typename I, I Index, typename Body >
+      constexpr bool
+      operator()( const Abstraction<I,Index,Body>& ) const & {
+	return exec( type<Abstraction<I,Index,Body>> );
+      }
+
+    private:
+
+      using data = pair<bool,size_t>;
+      
+      template< typename I, I Index, typename Body >
+      static constexpr bool
+      exec( Type<Abstraction<I,Index,Body>> ){
+	return aux( type<Body> ) == data( true, Index );
+      }
+
+      template< typename I, I Index, typename Body >
+      static constexpr auto
+      aux( Type<Abstraction<I,Index,Body>> ){
+	return data( aux( type<Body> ) == data( true, Index ), Index+1 );
+      }
+
+      template< typename T >
+      static constexpr auto
+      aux( Type<Value<T>> ){
+	return data( true, 0 );
+      }
+
+      template< typename I, I Index >
+      static constexpr auto
+      aux( Type<Variable<I,Index>> ){
+	return data( true, 0 );
+      }
+
+      template< typename F, typename T >
+      static constexpr auto
+      aux( Type<Application<F,T>> ){
+	return aux_app( aux( type<F> ), aux( type<T> ));
+      }
+
+      static constexpr auto
+      aux_app( const data& resf, const data& resx ){
+	return data( resf.first &&  resx.first,
+		     max( resf.second, resx.second ));
+      }      
+    } is_de_bruijn{};
+    
+
     /** Rewrite an expression with De Bruijn indexing 
      */
     constexpr
@@ -177,12 +228,56 @@ namespace Expression
       maybe_repeat( const Data<E,Depth,false>& data ){
 	return expression( data );
       }
-      	
-      
-
-      
       
     } de_bruijn{};  // end of class DeBruijn
+
+
+    /**
+     * @brief Invert a De Bruijn indexed expression
+     *
+     * @details 
+     */
+    class DeBruijn_invert {
+    public:
+      template< typename I, I Index, typename Body >
+      constexpr auto
+      operator()( const Abstraction<I,Index,Body>& expr ) const & {
+	return exec( expr );
+      }
+		
+    private:
+
+      template< typename I, I Index, typename Body >
+      static constexpr auto
+      exec( const Abstraction<I,Index,Body>& expr ){
+	return aux( expr, nat<Index> );
+      }
+
+      template< typename I, I Index, typename Body, size_t N >
+      static constexpr auto
+      aux( const Abstraction<I,Index,Body>& expr, Nat<N> ){
+	return fn( Variable<I,N-Index>(), aux( body( expr ), nat<N> ));
+      }
+
+      template< typename T, size_t N >
+      static constexpr auto
+      aux( const Value<T>& expr, Nat<N> ){ return expr; }
+
+      template< typename I, I Index, size_t N >
+      static constexpr auto
+      aux( const Variable<I,Index>&, Nat<N> ){ return Variable<I,N-Index>(); }
+
+      template< typename F, typename T, size_t N >
+      static constexpr auto
+      aux( const Application<F,T>& expr, Nat<N> ){
+	return aux( fun( expr ), nat<N> )( aux( arg( expr ), nat<N> ));
+      }
+    } de_bruijn_invert{}; // end of class DeBruijn_invert
+
+
+    
+
+    
     
   } // end of namespace Core
 } // end of namespace Expression

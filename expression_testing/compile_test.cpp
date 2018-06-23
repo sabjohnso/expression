@@ -18,6 +18,7 @@ struct Compile_test
     variable_test();
     value_test();
     operator_test();
+    function_test();
   }
   
   operator int() const { return accum; }
@@ -62,12 +63,26 @@ private:
     EXPR_STATIC_TEST( axpy( 2, 3, 4 ) == 10 );
 
     constexpr auto sqr = compile( var<0>*var<0> );
-    EXPR_STATIC_TEST( sqr( 3 ) == 9 );
-
-    
-
-    
+    EXPR_STATIC_TEST( sqr( 3 ) == 9 );    
   }
+
+  void
+  function_test(){
+    using namespace Expression::Core;
+    constexpr auto x = var<0>;
+    constexpr auto y = var<1>;
+    constexpr auto a = var<2>;
+    constexpr auto id = compile_function( fn( x, x ));
+    
+    EXPR_STATIC_TEST( id( 'x' ) == 'x' );
+    EXPR_STATIC_TEST( compile_function( fn( x, x*x ))( 2 ) == 4 );
+
+    constexpr auto axpy = compile_function( 
+      de_bruijn( fn( a, x, y, a*x+y )));
+    
+    EXPR_STATIC_TEST( axpy( 2, 3, 4 ) == 10 );
+    
+  } //end of function_test
 
   int accum;
 }; // end of struct Compile_test
