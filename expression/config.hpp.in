@@ -9,7 +9,7 @@ namespace Expression
     constexpr int major = ${EXPRESSION_MAJOR};
     constexpr int minor = ${EXPRESSION_MINOR};
     constexpr int update = ${EXPRESSION_UPDATE};
-    constexpr char version [] = "${EXPRESSON_VERSION}";
+    constexpr char version [] = "${EXPRESSION_VERSION}";
     constexpr char version_update [] = "${EXPRESSION_VERSION_UPDATE}";
     
   } // end of namespace Config
