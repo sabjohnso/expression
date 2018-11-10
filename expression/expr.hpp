@@ -4,7 +4,10 @@
 //
 // ... Expression header files
 //
+#include <expression/import.hpp>
 #include <expression/fwd.hpp>
+
+
 
 
 
@@ -94,8 +97,17 @@ namespace Expression
       operator |( const Expr& x, const Expr<U>& y ){
 	return Alternative<T,Alternative<U,nullptr_t>>(
 	  static_cast<const T&>( x ),
-	  static_cast<const U&> ( y ));
+	  static_cast<const U&> ( y ));	
       }
+
+      // template< typename U>
+      // friend constexpr auto
+      // operator >> ( const Expr& x, const Expr<U>& y ){
+      // 	return Guarded<T,U>(
+      // 	  static_cast<const T&>( x ),
+      // 	  static_cast<const U&>( y ));
+	  
+      // }
 
       
       
@@ -106,5 +118,17 @@ namespace Expression
     
   } // end of namespace Core
 } // end of namespace Expression
+
+
+namespace std
+{
+  template< typename U >
+  string
+  to_string( const Expression::Core::Expr<U>& e ){
+    stringstream ss;
+    ss << e;
+    return ss.str();
+  }
+} // end of namespace std
 
 #endif // !defined EXPR_HPP_INCLUDED_678766455533177280

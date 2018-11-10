@@ -32,7 +32,7 @@ namespace Expression
 
     template< typename T1, typename T2 >
     class Alternative;
-    
+
 
     
   } // end of namespace Core

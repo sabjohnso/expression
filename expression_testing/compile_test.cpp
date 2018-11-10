@@ -66,6 +66,8 @@ private:
     EXPR_STATIC_TEST( sqr( 3 ) == 9 );    
   }
 
+
+
   void
   function_test(){
     using namespace Expression::Core;

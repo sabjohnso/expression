@@ -6,25 +6,74 @@ cmake_minimum_required( VERSION 3.1 )
 
 project( EXPRESSION )
 
+#
+# ... Version information
+#
 set( EXPRESSION_MAJOR  0 )
 set( EXPRESSION_MINOR  1 )
 set( EXPRESSION_UPDATE 0 )
-set( EXPRESSION_VERSION expression-${EXPRESSION_MAJOR}.${EXPRESSION_MINOR} )
-set( EXPRESSION_VERSION_UPDATE ${EXPRESSION_VERSION}.{EXPRESSION_UPDATE} )
-  
 
+set( EXPRESSION_SUFFIX -${EXPRESSION_MAJOR}.${EXPRESSION_MINOR})
+
+set( EXPRESSION_VERSION expression-${EXPRESSION_SUFFIX} )
+set( EXPRESSION_VERSION_UPDATE ${EXPRESSION_VERSION}.{EXPRESSION_UPDATE} )
+
+
+#
+# ... Build options
+#
 option( BUILD_EXPRESSION_TESTING  "Build the expression tests" ON )
 option( BUILD_EXPRESSION_DOCUMENTATION "Build the documentation" ON )
+option( EXPRESSION_INSTALL_VERSIONED "Version specific installation" ON )
 
-include_directories( 
-  ${EXPRESSION_SOURCE_DIR}
-  ${EXPRESSION_BINARY_DIR} )
+#
+# ... Installation path information
+#
+set( EXPRESSION_INSTALL_INCLUDE_DIR include
+  CACHE PATH "Path for installation of header files")
 
-if( NOT EXPRESSION_INSTALL_INCLUDE_DIR )
-  set( EXPRESSION_INSTALL_INCLUDE_DIR include/expression
-    CACHE PATH "Path for installation of header files")
-endif( NOT EXPRESSION_INSTALL_INCLUDE_DIR )
+set( EXPRESSION_INSTALL_LIBRARY_DIR lib/expression
+  CACHE PATH "Path for installation of header files")
 
+if( EXPRESSION_INSTALL_VERSIONED )
+  string( APPEND EXPRESSION_INSTALL_INCLUDE_DIR /expression${EXPRESSION_SUFFIX} )
+  string( APPEND EXPRESSION_INSTALL_LIBRARY_DIR ${EXPRESSION_SUFFIX})
+endif()
+
+
+#
+# ... Dependencies
+#
+find_package( type_utility REQUIRED )
+find_package( function_utility REQUIRED )
+find_package( operators REQUIRED )
+
+
+
+
+
+#
+# ... Header library target
+#
+add_library( expression INTERFACE )
+target_link_libraries( expression PUBLIC type_utility function_utility operators)
+
+target_include_directories(expression INTERFACE $<INSTALL_INTERFACE:${EXPRESSION_INSTALL_INCLUDE_DIR}>)
+target_include_directories(expression INTERFACE $<BUILD_INTERFACE:${EXPRESSION_SOURCE_DIR}>)
+target_include_directories(expression INTERFACE $<BUILD_INTERFACE:${EXPRESSION_BINARY_DIR}>) 
+
+install( TARGETS expression
+  EXPORT expression
+  DESTINATION ${EXPRESSION_INSTALL_LIBRARY_DIR})
+
+install( EXPORT expression
+  DESTINATION ${EXPRESSION_INSTALL_LIBRARY_DIR}
+  FILE expression.cmake )
+
+
+#
+# ... Walk source tree
+# 
 add_subdirectory( expression )
 
 
@@ -46,15 +95,14 @@ if( BUILD_EXPRESSION_DOCUMENTATION )
 
   configure_file( Doxyfile.in Doxyfile )
   
-  if( NOT EXPRESSION_INSTALL_DOC_DIR )
-    set( EXPRESSION_INSTALL_DOC_DIR share/${EXPRESSION_VERSION}
-      CACHE PATH "Path for installation of documentation")
-  endif( NOT EXPRESSION_INSTALL_DOC_DIR )
+  set( EXPRESSION_INSTALL_DOC_DIR share/${EXPRESSION_VERSION}
+    CACHE PATH "Path for installation of documentation")
 
-  if( NOT EXPRESSION_INSTALL_MAN_DIR )
-    set( EXPRESSION_INSTALL_MAN_DIR share
-      CACHE PATH "Path for installation of manual pages" )
-  endif( NOT EXPRESSION_INSTALL_MAN_DIR )
+
+  
+  set( EXPRESSION_INSTALL_MAN_DIR share
+    CACHE PATH "Path for installation of manual pages" )
+
 
   find_package( Doxygen REQUIRED )
   configure_file( Doxyfile.in Doxygen )
@@ -77,6 +125,6 @@ endif( BUILD_EXPRESSION_DOCUMENTATION )
 
 
 
-  
+
 
 # end of build definition for expression

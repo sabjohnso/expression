@@ -11,10 +11,8 @@
 #include <expression/fun.hpp>
 
 
-namespace Expression
+namespace Expression::Core
 {
-  namespace Core
-  {
 
     template< typename T >
     constexpr auto
@@ -56,10 +54,6 @@ namespace Expression
       static_assert( is_de_bruijn( expr ));
       return curry<Index+1>( compile( de_bruijn_invert( expr )));
     }
-
-
-    
-  } // end of namespace Core
-} // end of namespace Expression
+} // end of namespace Expression::Core
 
 #endif // !defined COMPILE_HPP_INCLUDED_1070274173433093908

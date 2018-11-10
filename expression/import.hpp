@@ -10,6 +10,8 @@
 #include <tuple>
 #include <algorithm>
 #include <memory>
+#include <string>
+#include <sstream>
 
 //
 // ... External library header files
@@ -25,7 +27,12 @@ namespace Expression
 {
   namespace Core
   {
+    
     using std::size_t;
+
+    using std::string;
+    using std::stringstream;
+    
 
     using std::get;
     using std::move;

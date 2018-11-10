@@ -19,7 +19,6 @@ struct Binding_test
 
     std::cout << x << std::endl;
     
-    
   }
   operator int() const { return accum; }
   int accum;

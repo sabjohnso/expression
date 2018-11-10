@@ -3,7 +3,7 @@
 
 * Overview
 
-#+BEGIN_SRC c++
+  #+BEGIN_SRC c++
   constexpr 
   struct AddM : Lambda<AddM> {
   
@@ -18,10 +18,10 @@
 		 y = my ),
 	   rtn(x + y)));
   } addM{};
-#+END_SRC
+  #+END_SRC
 
 
-#+BEGIN_SRC c++
+  #+BEGIN_SRC c++
   struct Game {
     constexpr proc =
       fn( xs, fn( f, f( f, xs ))(
@@ -34,4 +34,23 @@
 		      env_unit( f( f, tl( xs ))))))));
 
   };
-#+END_SRC
+  #+END_SRC
+
+
+  #+BEGIN_SRC c++
+  constexpr
+  struct Fib {
+    constexpr static fib = var<0>;
+    constexpr static n = var<1>;
+    constexpr static f = var<2>;
+
+    costexpr auto f = compile(
+      def( fib( n ), fn( f, f( f ))(
+	     fn( f, n, accum, 
+		 iff( n == 0,
+		 accum,
+		      f(f, n+1, accum*n))))));
+
+  };
+
+  #+END_SRC

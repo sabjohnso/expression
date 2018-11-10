@@ -24,15 +24,9 @@ namespace Expression
       static constexpr index_type index = Index;
       using body_type = Body;
 
-      template< typename E >
-      constexpr
-      Abstraction( E&& expr )
-	: body( forward<E>( expr ))
-      {}
 
-      template< typename E >
       constexpr
-      Abstraction( const E& expr )
+      Abstraction( const body_type& expr )
 	: body( expr )
       {}
       
@@ -76,11 +70,9 @@ namespace Expression
     
     template< typename T, T Index, typename U, typename V, typename ... Ws >
     constexpr auto
-    fn( Variable<T,Index>, U&& x, V&& y, Ws&& ... zs ){
+    fn( Variable<T,Index>, const U& x, const V& y, const Ws& ... zs ){
       return fn( Variable<T,Index>{},
-		 fn( forward<U>( x ), 
-		     forward<V>( y ), 
-		     forward<Ws>( zs ) ... ));
+		 fn( x,  y, zs ... ));
     }
 
     template< typename Stream, typename I, I Index, typename Body >
