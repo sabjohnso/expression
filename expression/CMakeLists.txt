@@ -21,9 +21,5 @@ install( FILES
   utility.hpp
   val.hpp
   var.hpp
-  DESTINATION ${EXPRESSION_INSTALL_INCLUDE_DIR}/expression )
+  DESTINATION ${EXPRESSION_INSTALL_INCLUDEDIR}/expression )
 
-configure_file( expression-config.cmake.in expression-config.cmake )
-install( FILES
-  ${CMAKE_CURRENT_BINARY_DIR}/expression-config.cmake
-  DESTINATION ${EXPRESSION_INSTALL_LIBRARY_DIR})
