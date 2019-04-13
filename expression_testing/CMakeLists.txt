@@ -1,3 +1,4 @@
+include(FetchGTest)
 
 macro( expression_add_test  name )
   add_executable( ${name}_test ${name}_test.cpp )

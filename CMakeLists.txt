@@ -5,6 +5,8 @@
 cmake_minimum_required( VERSION 3.12 )
 project( EXPRESSION VERSION 0.1.0 LANGUAGES CXX)
 
+list(APPEND CMAKE_MODULE_PATH ${EXPRESSION_SOURCE_DIR}/cmake_modules)
+
 #
 # ... Build options
 #
@@ -12,6 +14,8 @@ option( BUILD_EXPRESSION_TESTING  "Build the expression tests" ON )
 option( BUILD_EXPRESSION_DOCUMENTATION "Build the documentation" ON )
 option( INSTALL_EXPRESSION "Install the expression library" ON)
 option( EXPRESSION_INSTALL_VERSIONED "Version specific installation" ON )
+
+
 
 #
 # ... Installation path information
