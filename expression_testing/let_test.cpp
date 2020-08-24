@@ -15,11 +15,11 @@
 
 namespace Expression::Testing
 {
-  namespace  // anonymous  
+  namespace  // anonymous
   {
-    using namespace Expression::Core;       
+    using namespace Expression::Core;
   } // end of anonymous namespace
-  
+
   TEST( let, fun)
   {
     constexpr auto e =
@@ -27,12 +27,12 @@ namespace Expression::Testing
        x = var<1>,
        y = var<2>,
        z = var<3>]{
-      return 
+      return
       fn(a, x, y,
 	 (let( z = a*x ),
 	  y+z)); }();
-    
-    std::cout << de_bruijn( e) << std::endl;
+
+    std::cout << de_bruijn(e) << std::endl;
     std::cout << e << std::endl;
     // auto f = compile_function(de_bruijn( e ));
   }
@@ -51,12 +51,12 @@ struct Let_test
     constexpr auto b   = var<4>;
     constexpr auto sqr = var<5>;
     constexpr auto twc = var<6>;
-    
+
 
     constexpr auto e1 =
       fn( x, (let( y = x+a ),
 	      y+b));
-    
+
     constexpr auto e2 =
       (let( twc = fn( x, x+x ),
     	    sqr = fn( x, x*x )),
@@ -64,8 +64,8 @@ struct Let_test
 
     std::cout << e1 << std::endl;
     std::cout << e2 << std::endl;
-    
-    
+
+
   }
   operator int() const { return accum; }
   int accum;

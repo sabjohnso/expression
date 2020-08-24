@@ -34,9 +34,6 @@ namespace Expression::Core
       return os;
     }
   };
-
-
-  
 } // end of namespace Expression::Core
 
 
@@ -49,7 +46,7 @@ namespace std
     ss << gexpr;
     return ss.str();
   }
-  
+
 } // end of namespace std
 
 #endif // !defined GUARD_HPP_INCLUDED_283643148324239353

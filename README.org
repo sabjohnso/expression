@@ -2,55 +2,82 @@
 
 
 * Overview
+Expression is an expression template library intended primarily as a
+study in the meta-programming capabilities of modern C++ standards and
+to investigate the possibility of using expression templates to
+improve the syntactic experience when working with monad and pattern
+matching in C++ and as a mechanism supporting
+symbolic computing in C++.
 
-  #+BEGIN_SRC c++
-  constexpr 
-  struct AddM : Lambda<AddM> {
-  
+#+CAPTION: Syntax defining a monadic addition operatore
+#+BEGIN_SRC c++
+  constexpr struct AddM : Lambda<AddM>
+  {
+
     constexpr static mx = var<0>;
     constexpr static my = var<1>;
-    constexpr static x  = var<2>;
-    constexpr static y  = var<3>;
+    constexpr static x = var<2>;
+    constexpr static y = var<3>;
 
     constexpr static proc =
-      fn( mx, my,
-	  (letm( x = mx,
-		 y = my ),
-	   rtn(x + y)));
+      fn(mx, my, (letm(x = mx, y = my), rtn(x + y)));
   } addM{};
-  #+END_SRC
+#+END_SRC
 
+#+CAPTION: Syntax definining a the use of a state monad for scoring a game
+#+BEGIN_SRC c++
+  struct Game : Lambda<Game>
+  {
+    constexpr proc = fn(
+      xs,
+      fn(f, f(f, xs))(fn(
+        f,
+        xs,
+        iff(
+          null(xs),
+          (letM(s = state_get), unit(s)),
+          (letM(s = state_get),
+           state_put(update(hd(xs), s)),
+           env_unit(f(f, tl(xs))))))));
+  } game{};
+#+END_SRC
 
-  #+BEGIN_SRC c++
-  struct Game {
-    constexpr proc =
-      fn( xs, fn( f, f( f, xs ))(
-	    fn( f, xs,
-		iff( null( xs ),
-		     (letM( s = state_get ),
-		      unit( s )),
-		     (letM( s = state_get ),
-		      state_put( update( hd( xs ), s )),
-		      env_unit( f( f, tl( xs ))))))));
-
-  };
-  #+END_SRC
-
-
-  #+BEGIN_SRC c++
-  constexpr
-  struct Fib {
+#+CAPTION: Syntax using a U combinator for unnamed recursion in the calculation of a member of the Fibonacci sequence
+#+BEGIN_SRC c++
+  constexpr struct Fib
+  {
     constexpr static fib = var<0>;
     constexpr static n = var<1>;
     constexpr static f = var<2>;
 
-    costexpr auto f = compile(
-      def( fib( n ), fn( f, f( f ))(
-	     fn( f, n, accum, 
-		 iff( n == 0,
-		 accum,
-		      f(f, n+1, accum*n))))));
-
+    constexpr auto f = compile(def(
+      fib(n),
+      fn(f, f(f))(
+        fn(f, n, accum, iff(n == 0, accum, f(f, n + 1, accum* n))))));
   };
+#+END_SRC
 
-  #+END_SRC
+#+BEGIN_SRC c++
+  struct Fib : Lambda<Fib>
+  {
+    static constexpr n = var<0>;
+    static constexpr accu = var<1>;
+    static constexpr auto proc = def(
+      fib(n),
+      fn(f)(f(f))(
+        fn(f, n, accum)(iff(n == 0, accum, f(f, n + 1, accum* n)))))
+  };
+#+END_SRC
+
+* Work
+** TODO Guarded expressions
+** TODO Overloaded functions
+** TODO Variadic abstraction and application
+** TODO Dependent types
+** TODO Make Expression concistent with other libraries
+*** TODO Use GTest and eliminated adhoc testing macros
+** TODO Documentation
+*** TODO Developer Documentation
+*** TODO User Documentation
+**** TODO HTML Documentation
+**** TODO Man pages
