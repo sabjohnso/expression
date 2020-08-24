@@ -6,14 +6,11 @@
 //
 #include <expression/import.hpp>
 
-
 namespace Expession
 {
   namespace Core
   {
 
-    
-    
   } // end of namespace Core
 } // end of namespace Expession
 

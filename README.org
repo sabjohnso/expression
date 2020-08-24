@@ -1,6 +1,5 @@
 #+TITLE: Expression - Expression templates library
 
-
 * Overview
 Expression is an expression template library intended primarily as a
 study in the meta-programming capabilities of modern C++ standards and

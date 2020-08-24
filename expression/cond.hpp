@@ -4,56 +4,49 @@
 //
 // ... Expression header files
 //
-#include <expression/import.hpp>
 #include <expression/guard.hpp>
-
-
+#include <expression/import.hpp>
 
 namespace Expression::Core
 {
 
-  template< typename ... >
+  template<typename...>
   class Cond_form;
 
-  template< typename T, typename P, typename F >
-  class Cond_form<Guarded<T,P>,F>
+  template<typename T, typename P, typename F>
+  class Cond_form<Guarded<T, P>, F>
   {
   public:
-
-    using guarded_expression_type = Guarded<T,P>;
+    using guarded_expression_type = Guarded<T, P>;
     using fail_expression_type = F;
 
-    template< typename E1, typename E2 >
-    Cond_form( E1&& e1, E2&& e2 )
-      : gexpr( forward<E1>( e1 ))
-      , fexpr( forward<E2>( e2 ))
+    template<typename E1, typename E2>
+    Cond_form(E1&& e1, E2&& e2)
+      : gexpr(forward<E1>(e1))
+      , fexpr(forward<E2>(e2))
     {}
-          
+
   private:
     guarded_expression_type gexpr;
     fail_expression_type fexpr;
-    
-    
+
   }; // end of class Cond_form
 
-
-  template< typename G, typename F >
+  template<typename G, typename F>
   constexpr auto
-  cond( G&& gexpr, F fexpr ){
+  cond(G&& gexpr, F fexpr)
+  {
     return Cond_form<decay_t<G>, decay_t<F>>(
-      forward<G>( gexpr ),
-      forward<F>( fexpr ));
-    
+      forward<G>(gexpr), forward<F>(fexpr));
   }
 
-  template< typename G1, typename G2, typename E, typename ... Es >
+  template<typename G1, typename G2, typename E, typename... Es>
   constexpr auto
-  cond( G1&& g1, G2&& g2, E&& e, Es&& ... es ){
+  cond(G1&& g1, G2&& g2, E&& e, Es&&... es)
+  {
     return cond(
-      forward<G1>( g1 ),
-      cond( forward<G2>( g2 ),
-	    forward<E>( e ),
-	    forward<Es>( es )... ));
+      forward<G1>(g1),
+      cond(forward<G2>(g2), forward<E>(e), forward<Es>(es)...));
   }
 } // end of namespace Expression::Core
 
