@@ -1,12 +1,42 @@
-//
-// ... Expression header files
-//
-#include <expression/expression.hpp>
 
 //
 // ... Testing header files
 //
-#include <expression_testing/test_macros.hpp>
+#include <gtest/gtest.h>
+
+//
+// ... Expression header files
+//
+#include <expression/expression.hpp>
+#include <expression/de_bruijn.hpp>
+#include <expression/simplify.hpp>
+#include <expression/compile.hpp>
+
+
+namespace Expression::Testing
+{
+  namespace  // anonymous  
+  {
+    using namespace Expression::Core;       
+  } // end of anonymous namespace
+  
+  TEST( let, fun)
+  {
+    constexpr auto e =
+      [a = var<0>,
+       x = var<1>,
+       y = var<2>,
+       z = var<3>]{
+      return 
+      fn(a, x, y,
+	 (let( z = a*x ),
+	  y+z)); }();
+    
+    std::cout << de_bruijn( e) << std::endl;
+    std::cout << e << std::endl;
+    // auto f = compile_function(de_bruijn( e ));
+  }
+} // end of namespace Expression::Testing
 
 
 /** Test the let form */
@@ -40,11 +70,3 @@ struct Let_test
   operator int() const { return accum; }
   int accum;
 }; // end of struct Let_test
-
-int
-main( int, char** )
-{
-  int accum = 0;
-  accum += Let_test();
-  return accum;
-}

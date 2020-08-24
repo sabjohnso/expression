@@ -30,24 +30,24 @@
     using TypeUtility::type_pure;
 
 
-/** Test the variable type 
+/** Test the variable type
 */
 struct Variable_test
 {
   Variable_test() : accum( 0 ) {
 
 
-  
+
 
     instance_printing_test();
     type_printing_test();
 
-    
+
   }
   operator int() const { return accum; }
 
   void
-  static_tests(){   
+  static_tests(){
     EXPR_STATIC_TEST( is_empty<Variable<size_t,0>>::value );
     EXPR_STATIC_TEST( is_same<decay_t<decltype(var<0>)>,Variable<size_t,0>>::value );
     EXPR_STATIC_TEST( var<0> == var<0> );
@@ -63,7 +63,7 @@ struct Variable_test
   }
 
   void
-  instance_printing_test(){    
+  instance_printing_test(){
     EXPR_TEST(
       accum,
       string_repr( var<0> ) == "%0" );
@@ -71,8 +71,9 @@ struct Variable_test
 
   void
   type_printing_test(){
-    EXPR_TEST( 
-      accum, 
+    std::cout << string_repr(type_pure(var<0>)) << std::endl;
+    EXPR_TEST(
+      accum,
       string_repr( type_pure( var<0> )) == "Expression::Core::Variable<unsigned long,0>" );
   }
   int accum;

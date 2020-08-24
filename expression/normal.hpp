@@ -54,7 +54,7 @@ namespace Expression
       /** Otherwise, an abstraction is eta normal if its body is. */
       template< typename I, I Index, typename Body >
       static constexpr bool
-      aux( Type<Abstraction<I,Index,Body>> ){ return aux( type<Body> ); } 
+      aux( Type<Abstraction<I,Index,Body>> ){ return aux( type<Body> ); }
 
       /** Application is eta normal of the applicand and argument are eta normal */
       template< typename F, typename A >
@@ -62,12 +62,12 @@ namespace Expression
       aux( Type<Application<F,A>> ){
 	return aux( type<F> ) && aux( type<A> );
       }
-      
+
     } eta_normal{};
 
 
 
-    /** A class providing a predicate for beta normal form of an expression 
+    /** A class providing a predicate for beta normal form of an expression
      *
      * @details This class implements a function call operator that returns
      * true for an expression that is in beta normal form and false otherwise.
@@ -82,14 +82,14 @@ namespace Expression
       /** Return the result of beta-normality for an expression */
       template< typename E >
       constexpr bool
-      operator ()( const E& expr ) const & { return aux( type<decay_t<E>> ); }
+      operator ()( const E& ) const & { return aux( type<decay_t<E>> ); }
 
       /** Return the result of beta-normality for an expression type */
       template< typename E >
       constexpr bool
       operator ()( Type<E> ) const & { return aux( type<E> ); }
 
-      
+
     private:
 
       /** As the default, return true */
@@ -107,18 +107,18 @@ namespace Expression
       static constexpr bool
       aux( Type<Application<Abstraction<I,Index,Body>,Arg>> ){ return false; }
 
-      /** Application when the applicand is not an abstraction is normal when the 
+      /** Application when the applicand is not an abstraction is normal when the
        * applicand and argument are beta normal */
       template< typename F, typename A >
       static constexpr bool
       aux( Type<Application<F,A>> ){
 	return aux( type<A> ) && aux( type<A> );
       }
-      
+
     } beta_normal{};
 
 
-  
+
   } // end of namespace Core
 } // end of namespace Expression
 

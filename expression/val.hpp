@@ -29,20 +29,20 @@ namespace Expression
       constexpr
       value_type
       get() const & { return value; }
-      
-      
+
+
 
       constexpr
       const value_type&
       operator *() const & { return value; }
-      
+
 
 
       constexpr
       value_type&&
       operator *() && { return value; }
 
-      
+
 
     private:
 
@@ -53,8 +53,8 @@ namespace Expression
 
       constexpr
       operator value_type&& () && { return move( value ); }
-      
-      
+
+
 
       //
       // ... friends
@@ -83,12 +83,9 @@ namespace Expression
       }
 
 
-      
-      
+
+
     }; // end of class Value
-
-
-
 
     template< typename T, typename R = Value<decay_t<T>> >
     constexpr R
@@ -96,15 +93,20 @@ namespace Expression
       return Value<decay_t<T>>( forward<T>( x ));
     }
 
-
-    template< typename Stream, typename T >
+    template<typename Stream, typename T>
     Stream&
-    operator <<( Stream& os, Type<Value<T>> ){
+    operator <<(Stream& os, Type<Value<T>> const&){
       os << "Expression::Core::Value<" << type<T> << ">";
       return os;
     }
-    
-    
+
+    template<typename T>
+    ostream&
+    operator <<(ostream& os, Type<Value<T>> const&){
+      os << "Expression::Core::Value<" << type<T> << ">";
+      return os;
+    }
+
   } // end of namespace Core
 } // end of namespace Expression
 

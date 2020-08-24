@@ -28,7 +28,7 @@ namespace Expression::Core
 
     template< typename I, I Index >
     constexpr auto
-    compile( const Variable<I,Index>& v ){
+    compile( const Variable<I,Index>&){
       return selection( identity, index_sequence<size_t( Index )>());
     }
 
@@ -46,12 +46,12 @@ namespace Expression::Core
       return compile( body( expr ));
     }
 
-    
+
 
     template< typename I, I Index, typename Body >
     constexpr auto
     compile_function( const Abstraction<I,Index,Body>& expr ){
-      static_assert( is_de_bruijn( expr ));
+      static_assert( is_de_bruijn( type<Abstraction<I,Index,Body>> ));
       return curry<Index+1>( compile( de_bruijn_invert( expr )));
     }
 } // end of namespace Expression::Core

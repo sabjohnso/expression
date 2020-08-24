@@ -76,13 +76,14 @@ private:
     constexpr auto a = var<2>;
     constexpr auto id = compile_function( fn( x, x ));
     
+    
     EXPR_STATIC_TEST( id( 'x' ) == 'x' );
     EXPR_STATIC_TEST( compile_function( fn( x, x*x ))( 2 ) == 4 );
 
     constexpr auto axpy = compile_function( 
       de_bruijn( fn( a, x, y, a*x+y )));
     
-    EXPR_STATIC_TEST( axpy( 2, 3, 4 ) == 10 );
+    EXPR_STATIC_TEST(axpy( 2, 3, 4 ) == 10);
     
   } //end of function_test
 

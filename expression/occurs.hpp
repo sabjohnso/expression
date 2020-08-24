@@ -23,7 +23,7 @@ namespace Expression
 
       template< typename T, T Index, typename E  >
       constexpr bool
-      operator ()( Variable<T,Index>, E&& expr ) const & {
+      operator ()( Variable<T,Index>, E&& ) const & {
 	return aux( integer<T,Index>, type<decay_t<E>> );
       }
 
@@ -34,7 +34,7 @@ namespace Expression
       }
 
     private:
-      
+
       template< typename T, T Index >
       static constexpr bool
       aux( Integer<T,Index>, Type<Variable<T,Index>> ){ return true; }
@@ -60,7 +60,7 @@ namespace Expression
       }
     } occurs{};
 
-    
+
 
     constexpr
     class Occurs_bound
@@ -69,7 +69,7 @@ namespace Expression
 
       template< typename T, T Index, typename E >
       constexpr bool
-      operator()( Variable<T,Index>, E&& e ) const & {
+      operator()( Variable<T,Index>, E&& ) const & {
 	return aux( integer<T,Index>, type<decay_t<E>> );
       }
 
@@ -79,7 +79,7 @@ namespace Expression
 	return aux( integer<T,Index>, type<E> );
       }
 
-      
+
     private:
 
       template< typename T, T Index, typename Body >
@@ -103,17 +103,17 @@ namespace Expression
       template< typename T, T Index, typename E >
       static constexpr bool
       aux( Integer<T,Index>, Type<E> ){ return false; }
-      
-    } occurs_bound{};
-    
 
-    
-    
+    } occurs_bound{};
+
+
+
+
     constexpr
     class Occurrs_free
     {
     public:
-      
+
       template< typename T, T Index, typename E >
       constexpr bool
       operator ()( Variable<T,Index>, E&& ) const & {
@@ -125,7 +125,7 @@ namespace Expression
       operator()( Integer<T,Index>, Type<E> ) const & {
 	return aux( integer<T,Index>, type<E> );
       }
-      
+
     private:
 
       template< typename T, T Index >
@@ -136,7 +136,7 @@ namespace Expression
       static constexpr bool
       aux( Integer<T,Index>, Type<Abstraction<T,Index,Body>> ){ return false; }
 
-      
+
       template< typename T, T Index, T OtherIndex, typename Body >
       static constexpr bool
       aux( Integer<T,Index>, Type<Abstraction<T,OtherIndex,Body>> ){
@@ -153,7 +153,7 @@ namespace Expression
       template< typename T, T Index, typename E >
       static constexpr bool
       aux( Integer<T,Index>, Type<E> ){ return false; }
-      
+
     } occurs_free{};
 
 
@@ -161,12 +161,12 @@ namespace Expression
 
 
 
-    
+
     constexpr
     class Has_free_variables
     {
     public:
-      
+
       template< typename E >
       constexpr bool
       operator ()( E&& ) const & { return aux( type<decay_t<E>> ); }
@@ -210,7 +210,7 @@ namespace Expression
       template< typename T, T ... BoundIndices, typename U >
       static constexpr bool
       aux( Integer_set<T, BoundIndices ...>, Type<Value<U>> ){ return false; }
-      
+
       template< typename T, T ... BoundIndices, T Index >
       static constexpr bool
       aux( Integer_set<T, BoundIndices...> bound_set, Type<Variable<T,Index>> ){
@@ -230,14 +230,14 @@ namespace Expression
 		    type<Body> );
       }
 
-      
+
 
     } has_free_variables{};
-    
 
 
 
-    
+
+
   } // end of namespace Core
 } // end of namespace Expression
 

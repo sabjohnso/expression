@@ -11,7 +11,9 @@
 #include <algorithm>
 #include <memory>
 #include <string>
+#include <iostream>
 #include <sstream>
+
 
 //
 // ... External library header files
@@ -27,12 +29,13 @@ namespace Expression
 {
   namespace Core
   {
-    
+
     using std::size_t;
 
     using std::string;
     using std::stringstream;
-    
+    using std::ostream;
+
 
     using std::get;
     using std::move;
@@ -70,7 +73,7 @@ namespace Expression
 
     using Operators::add;
     using Operators::Addition;
-    
+
     using Operators::subtract;
     using Operators::multiply;
     using Operators::divide;
@@ -78,8 +81,8 @@ namespace Expression
 
 
 
-    
-    
+
+
   } // end of namespace Core
 } // end of namespace Expression
 

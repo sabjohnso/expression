@@ -27,10 +27,16 @@ namespace Expression
 	return exec( type<Abstraction<I,Index,Body>> );
       }
 
+      template< typename I, I Index, typename Body >
+      constexpr bool
+      operator()( const Type<Abstraction<I,Index,Body>>& ) const & {
+	return exec( type<Abstraction<I,Index,Body>> );
+      }
+
     private:
 
       using data = pair<bool,size_t>;
-      
+
       template< typename I, I Index, typename Body >
       static constexpr bool
       exec( Type<Abstraction<I,Index,Body>> ){
@@ -65,18 +71,18 @@ namespace Expression
       aux_app( const data& resf, const data& resx ){
 	return data( resf.first &&  resx.first,
 		     max( resf.second, resx.second ));
-      }      
+      }
     } is_de_bruijn{};
-    
 
-    /** Rewrite an expression with De Bruijn indexing 
+
+    /** Rewrite an expression with De Bruijn indexing
      */
     constexpr
     class DeBruijn
     {
-      
+
     public:
-      
+
       template< typename E >
       constexpr auto
       operator ()( E&& expr ) const & {
@@ -85,7 +91,7 @@ namespace Expression
       }
     private:
 
-      
+
       template< typename E >
       static constexpr auto
       exec( true_type, E&& expr ){
@@ -97,7 +103,7 @@ namespace Expression
       exec( false_type, E&& expr ){
 	return maybe_repeat( aux( forward<E>( expr )));
       }
-      
+
       template< typename E >
       static constexpr auto
       exec( E&& expr ){
@@ -107,7 +113,7 @@ namespace Expression
 
       /** Internal data exchange type
        *
-       * @details This type hold the modified De Bruijn 
+       * @details This type hold the modified De Bruijn
        * indexed expression and indicates the binding depth
        * an necessity to repeat the indexing procedure through
        * template parameter arguments.
@@ -121,16 +127,16 @@ namespace Expression
 	Data( const expression_type& input ) : expr( input ){}
       private:
 	expression_type expr;
-	
+
 	friend constexpr const expression_type&
 	expression( const Data& data ){
 	  return data.expr;
 	}
       }; // end of class Data
-      
 
-      
-      
+
+
+
       template< typename T >
       static constexpr auto
       aux( const Value<T>& x ){
@@ -159,7 +165,7 @@ namespace Expression
       }
 
 
-      
+
       template< typename T, T Index, typename Body >
       static constexpr auto
       aux( const Abstraction<T,Index,Body>& expr ){
@@ -171,11 +177,11 @@ namespace Expression
       aux_fun( const Abstraction<T,Index,Body>& expr, const Data<NewBody,Depth,Repeat>& data ){
 	return aux_fun_index_check( bool_constant<Index == Depth>{}, expr, data );
       }
-      
+
 
       template< typename T, T Index, typename Body, size_t Depth, typename NewBody, bool Repeat >
       static constexpr auto
-      aux_fun_index_check( true_type, const Abstraction<T,Index,Body>& expr, const Data<NewBody,Depth,Repeat>& data ){
+      aux_fun_index_check( true_type, const Abstraction<T,Index,Body>&, const Data<NewBody,Depth,Repeat>& data ){
 	static_assert( Index == Depth );
 	return Data<Abstraction<T,Index,NewBody>,Index+1,Repeat>( fn( Variable<T,Index>{}, expression( data )));
       }
@@ -198,12 +204,12 @@ namespace Expression
       template< typename T, T Index, typename Body, typename NewBody, size_t Depth, bool Repeat >
       static constexpr auto
       aux_fun_occurs_check( false_type, const Abstraction<T,Index,Body>& expr, const Data<NewBody,Depth,Repeat>& data ){
-	return aux_fun2( expr, data, 
+	return aux_fun2( expr, data,
 			 rewrite(expression( data ),
 				 Variable<T,Index>{},
 				 Variable<T,Depth>{} ));
       }
-      
+
 
       template< typename T, T Index, typename OldBody,
 		typename Body, size_t Depth, bool Repeat,
@@ -222,20 +228,20 @@ namespace Expression
 	return exec( expression( data ));
       }
 
-      
+
       template< typename E, size_t Depth >
       static constexpr auto
       maybe_repeat( const Data<E,Depth,false>& data ){
 	return expression( data );
       }
-      
+
     } de_bruijn{};  // end of class DeBruijn
 
 
     /**
      * @brief Invert a De Bruijn indexed expression
      *
-     * @details 
+     * @details
      */
     class DeBruijn_invert {
     public:
@@ -244,7 +250,7 @@ namespace Expression
       operator()( const Abstraction<I,Index,Body>& expr ) const & {
 	return exec( expr );
       }
-		
+
     private:
 
       template< typename I, I Index, typename Body >
@@ -275,10 +281,10 @@ namespace Expression
     } de_bruijn_invert{}; // end of class DeBruijn_invert
 
 
-    
 
-    
-    
+
+
+
   } // end of namespace Core
 } // end of namespace Expression
 
